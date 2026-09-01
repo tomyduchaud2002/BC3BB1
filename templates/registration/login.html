@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion — Garage Auto</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+  <main class="auth-card">
+    <h1>Garage Automobile</h1>
+    <h2>Connexion</h2>
+
+    {% if form.errors %}
+      <div class="alert">Identifiants invalides, veuillez réessayer.</div>
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}" class="auth-form">
+      {% csrf_token %}
+
+      <label for="id_username">Nom d'utilisateur</label>
+      <input id="id_username" name="username" type="text" required autofocus />
+
+      <label for="id_password">Mot de passe</label>
+      <input id="id_password" name="password" type="password" required />
+
+      <button type="submit" class="btn-primary">Se connecter</button>
+    </form>
+    <p style="margin-top:1rem"><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p>
+  </main>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accueil — Garage Auto</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Garage Automobile</h1>
+    <nav>
+      <a href="{% url 'logout' %}">Se déconnecter</a>
+    </nav>
+  </header>
+  <main class="container">
+    <p>Bienvenue ! Vous êtes connecté.</p>
+    <p>Cette page sert d'exemple pour l'authentification.</p>
+  </main>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
