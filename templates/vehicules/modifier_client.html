@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un client</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #081b2b;
+            color: white;
+        }
+
+        header {
+            background: #132d44;
+            padding: 25px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #132d44;
+            border-radius: 12px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #397da8;
+            border-radius: 6px;
+            background: #0d263b;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            background: #299bd6;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .retour {
+            display: inline-block;
+            margin-left: 10px;
+            color: #5bbcff;
+            text-decoration: none;
+        }
+
+        .erreur {
+            color: #ff8a8a;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Garage Automobile</h1>
+</header>
+
+<main>
+
+    <h2>Modifier le client</h2>
+
+    {% if error %}
+        <p class="erreur">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="nom">Nom</label>
+        <input
+            type="text"
+            id="nom"
+            name="nom"
+            value="{{ client.nom }}"
+            required
+        >
+
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            value="{{ client.email }}"
+        >
+
+        <button type="submit">
+            Enregistrer les modifications
+        </button>
+
+        <a class="retour" href="{% url 'liste_clients' %}">
+            Annuler
+        </a>
+    </form>
+
+</main>
+
+</body>
+</html>
