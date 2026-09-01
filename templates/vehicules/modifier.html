@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Modifier un client - Garage Automobile</title>
+    <title>Modifier un véhicule</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #0b1d2d;
+            background: #081b2b;
             color: white;
         }
 
         header {
+            background: #132d44;
             padding: 25px 40px;
-            background-color: #142b40;
         }
 
         header h1 {
@@ -25,14 +28,10 @@
 
         main {
             max-width: 600px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .form-container {
-            background-color: #142b40;
-            padding: 35px;
-            border-radius: 8px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #132d44;
+            border-radius: 12px;
         }
 
         h2 {
@@ -40,49 +39,42 @@
             margin-bottom: 30px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-top: 18px;
+            margin-bottom: 7px;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
-            box-sizing: border-box;
             padding: 12px;
-            border: 1px solid #385872;
+            border: 1px solid #397da8;
             border-radius: 6px;
-            background-color: #0f2639;
+            background: #0d263b;
             color: white;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        button,
-        .btn-retour {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            text-decoration: none;
-            cursor: pointer;
-            font-size: 15px;
         }
 
         button {
-            background-color: #269fe8;
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            background: #299bd6;
             color: white;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        .btn-retour {
-            background-color: #385872;
-            color: white;
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .retour {
+            display: inline-block;
+            margin-left: 10px;
+            color: #5bbcff;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -95,63 +87,78 @@
 
 <main>
 
-    <div class="form-container">
+    <h2>Modifier le véhicule</h2>
 
-        <h2>Modifier un client</h2>
+    <form method="post">
+        {% csrf_token %}
 
-        <form method="post">
+        <label for="plaque">Plaque d'immatriculation</label>
 
-            {% csrf_token %}
+        <input
+            type="text"
+            id="plaque"
+            name="plaque"
+            value="{{ vehicule.plaque }}"
+            required
+        >
 
-            <div class="form-group">
+        <label for="marque">Marque</label>
 
-                <label for="nom">
-                    Nom
-                </label>
+        <input
+            type="text"
+            id="marque"
+            name="marque"
+            value="{{ vehicule.marque }}"
+            required
+        >
 
-                <input
-                    type="text"
-                    id="nom"
-                    name="nom"
-                    value="{{ client.nom }}"
-                    required
+        <label for="modele">Modèle</label>
+
+        <input
+            type="text"
+            id="modele"
+            name="modele"
+            value="{{ vehicule.modele }}"
+            required
+        >
+
+        <label for="annee">Année</label>
+
+        <input
+            type="number"
+            id="annee"
+            name="annee"
+            value="{{ vehicule.annee|default_if_none:'' }}"
+        >
+
+        <label for="client">Client</label>
+
+        <select id="client" name="client">
+
+            <option value="">
+                -- Aucun client --
+            </option>
+
+            {% for client in clients %}
+                <option
+                    value="{{ client.id }}"
+                    {% if vehicule.client_id == client.id %}selected{% endif %}
                 >
+                    {{ client.nom }}
+                </option>
+            {% endfor %}
 
-            </div>
+        </select>
 
-            <div class="form-group">
+        <button type="submit">
+            Enregistrer les modifications
+        </button>
 
-                <label for="email">
-                    Email
-                </label>
+        <a class="retour" href="{% url 'liste_vehicules' %}">
+            Annuler
+        </a>
 
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="{{ client.email }}"
-                >
-
-            </div>
-
-            <div class="buttons">
-
-                <button type="submit">
-                    Enregistrer les modifications
-                </button>
-
-                <a
-                    href="{% url 'liste_clients' %}"
-                    class="btn-retour"
-                >
-                    Retour à la liste
-                </a>
-
-            </div>
-
-        </form>
-
-    </div>
+    </form>
 
 </main>
 
